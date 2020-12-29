@@ -33,6 +33,10 @@ exports.consoleDebugger = (...msg) => {
   console.log(colors.blue(`info`), ...msg);
 };
 
+exports.consoleApiTips = (...msg) => {
+  console.log(colors.magenta(`cyan`), ...msg);
+};
+
 /**
  * 对字符串进行字典排序并进行sha1加密
  */

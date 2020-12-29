@@ -1,0 +1,44 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.header {
+  border: 1px solid #8fabc8;
+  color: #fff;
+}
+.title {
+  padding: 10px 0;
+  background-color: #457ab2;
+}
+.clear_btn {
+  padding: 10px 0;
+  text-align: center;
+  color: #000;
+}
+.api_btn_list {
+  border: 1px solid #8fabc8;
+}
+.api_item {
+  padding: 10px 10px;
+  word-break: break-all;
+  border-bottom: 1px solid #eee;
+}
+.api_item_status {
+  color: green;
+}
+.api_item_error {
+  color: red;
+}
+.api_btn_list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+}
+.wx_img {
+  width: 300px;
+}
+.api_btn_item {
+  width: 25%;
+  padding: 10px 0;
+  text-align: center;
+}

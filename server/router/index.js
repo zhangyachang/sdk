@@ -5,7 +5,7 @@ const router = new Router({
   prefix: "/api/wx",
 });
 
-const wx = require("../modules/wx");
+const wx = require("../controller/wx");
 
 // 接口测试
 router.get("/", wx.test);

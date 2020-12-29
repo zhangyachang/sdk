@@ -3,7 +3,7 @@ const MSG = require("../utils/msg");
 const { cacheData, wx } = require("../config");
 const wxAPi = require("../api/wx");
 const utils = require("../utils");
-const { consoleError, consoleDebugger, consoleSuccess, consoleWarn } = utils;
+const { consoleError, consoleDebugger, consoleSuccess, consoleWarn, consoleApiTips } = utils;
 
 class Wx {
   constructor() {
@@ -85,11 +85,13 @@ class Wx {
 
   /**
    * 微信sdk的授权认证
+   * 请求方式 POST
+   *
+   * @param {Object}
+   *  url 地址域名
    */
   async jsSdkAuth(ctx) {
-    consoleWarn("微信sdk的授权认证");
-    // console.log("请求参数", ctx.query);
-    // console.log("post参数", ctx.request.body);
+    consoleApiTips("微信sdk的授权认证");
     const { url } = ctx.request.body;
     const timestamp = Date.now();
     const nonceStr = utils.randomString();
@@ -97,7 +99,7 @@ class Wx {
 
     const string = `jsapi_ticket=${jsapi_ticket}&noncestr=${nonceStr}&timestamp=${timestamp}&url=${url}`;
     const signature = utils.sha1String(string);
-    console.log(timestamp, nonceStr, signature, url);
+    // console.log(timestamp, nonceStr, signature, url);
 
     ctx.body = {
       code: 0,

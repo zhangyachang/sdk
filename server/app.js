@@ -12,7 +12,6 @@ const utils = require("./utils");
 
 const app = new Koa();
 
-app.use(logger());
 app.use(async (ctx, next) => {
   // 加上去了 解决 cors 跨域问题
   ctx.set("Access-Control-Allow-Origin", "*");
@@ -24,6 +23,8 @@ app.use(async (ctx, next) => {
   if (ctx.method == "OPTIONS") ctx.status = 200;
   else await next();
 });
+
+app.use(logger());
 
 // 进行全局错误捕获处理
 app.use(async (ctx, next) => {
