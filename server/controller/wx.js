@@ -10,6 +10,7 @@ class Wx {
     this.initWxServer();
   }
 
+  // 初始化微信服务
   initWxServer() {
     this.getAccessToken();
     this.intervalRefreshAccessToken();
@@ -43,7 +44,7 @@ class Wx {
     try {
       const result = await wxAPi.getJsApiTicket(access_token);
       if (result.status !== 200) {
-        return console.log("服务端异常报错");
+        return consoleError("服务端异常报错");
       }
       if (result.data.errcode !== 0) {
         return consoleError("获取ticket异常", result);
@@ -58,7 +59,7 @@ class Wx {
 
   intervalRefreshAccessToken() {
     setInterval(() => {
-      consoleDebugger("自动刷新access_token");
+      consoleDebugger("access_token自刷新");
       this.getAccessToken();
     }, wx.refreshTime * 1000);
   }

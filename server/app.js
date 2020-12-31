@@ -1,5 +1,6 @@
 "use strict";
 
+console.log("微信服务启动中...");
 const Koa = require("koa");
 const koaStatic = require("koa-static");
 const logger = require("koa-logger");
@@ -51,5 +52,5 @@ app.use(router.routes()).use(router.allowedMethods());
 app.use(koaStatic(path.join(__dirname, "./public")));
 
 app.listen(config.port, () => {
-  utils.consoleSuccess(`${config.port}服务启动成功...`);
+  utils.consoleSuccess(`${config.port}端口服务启动成功...`);
 });
