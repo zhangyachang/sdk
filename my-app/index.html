@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>文本</h1>
+
+    <script>
+      const EvaporationConstantMap = {
+        0: 0.96,
+        1: 0.96,
+        2: 1.17,
+        3: 1.38,
+        4: 1.58,
+        5: 1.79,
+        6: 1.99,
+        7: 2.2,
+      };
+      const calcLastCleanTimes = (
+        prevTimes, // 云端剩余清洁次数接口数据
+        daysLastOpe, // 当前dp数据
+        prevDaysLastOpe, // 存储的上次dp数据
+        cleaningCycles, // 当前dp数据
+        prevCleaningCycles // 存储的上次dp数据
+      ) => {
+        console.log(
+          "calcLastCleanTimes",
+          " prevTimes",
+          prevTimes,
+          " daysLastOpe",
+          daysLastOpe,
+          " prevDaysLastOpe",
+          prevDaysLastOpe,
+          " cleaningCycles",
+          cleaningCycles,
+          " prevCleaningCycles",
+          prevCleaningCycles
+        );
+
+        const ratio = cleaningCycles === 0 ? 0 : Math.round(daysLastOpe / cleaningCycles);
+        console.log("ratio", ratio);
+        const constant = ratio >= 7 ? 2.2 : EvaporationConstantMap[`${ratio}`];
+        const times = Math.round(prevTimes - (daysLastOpe - prevDaysLastOpe) * 0.04 - (cleaningCycles - prevCleaningCycles) * constant);
+        console.log("times", times < 0 ? 0 : times);
+        return times < 0 ? 0 : times;
+      };
+
+      // 30 21 21 3 2
+      // 24 0 24 4 4
+      // console.log("times", calcLastCleanTimes(30, 21, 21, 3, 2));
+      // prevTimes 22  daysLastOpe 0  prevDaysLastOpe 0  cleaningCycles 17  prevCleaningCycles 20
+      // prevTimes 25  daysLastOpe 0  prevDaysLastOpe 0  cleaningCycles 21  prevCleaningCycles 17
+      // prevTimes 21  daysLastOpe 0  prevDaysLastOpe 0  cleaningCycles 17  prevCleaningCycles 21
+      console.log("times111", calcLastCleanTimes(22, 0, 0, 21, 17));
+
+
+      // 云端存储上次清洁时间次数 24  prevCleaningCycles
+      // 距离上次剃须时间  0         dp点-116
+      // 云端存储的上次剃须时间 24 prevDaysLastOpe
+      // 本次清洁完成后剃须刀清洁次数 4 (剃须刀本地存储有一个这个剃须刀一共清洁过多少次的清洁次数)- 查看dp点154
+      // 云端存储上一个剩余清洁次数 4  (进入面板后会保存一个剃须刀本地存储有一个这个剃须刀一共清洁过多少次的清洁次数)
+
+      // 计算过程 系数配置
+      // {
+      //   0: 0.96,
+      //   1: 0.96,
+      //   2: 1.17,
+      //   3: 1.38,
+      //   4: 1.58,
+      //   5: 1.79,
+      //   6: 1.99,
+      //   7: 2.2,
+      // };
+      // 系数 = (距离上次剃须时间 / 本次清洁完成后剃须刀清洁次数) 四舍五入 --> 21 / 3 = 7;
+      // 根据配置系数 可得 参数 2.2  (系数最大为2.2)
+      // 清洁次数 = 云端存储上次清洁时间次数 - 0.04 * (距离上次剃须时间 - 云端存储的上次剃须时间) - (本次清洁完成后剃须刀清洁次数 - 云端存储上一个剩余清洁次数) * 【参数】
+      //   结果并四舍五入
+
+      // 清洁次数 = 30 - 0.04*(21 - 21) - (3 - 2) * 2.2
+      //         = 30 - 0 - 2.2
+      //         = 27.8 = 28
+    </script>
+  </body>
+</html>

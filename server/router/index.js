@@ -12,4 +12,5 @@ router.get("/", wx.test);
 
 // 微信sdk授权接口
 router.post("/jsSdkAuth", wx.jsSdkAuth);
+
 module.exports = router;

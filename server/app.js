@@ -9,9 +9,11 @@ const path = require("path");
 
 const config = require("./config");
 const router = require("./router");
+const mockRouter = require("./router/mock");
 const utils = require("./utils");
 
 const app = new Koa();
+let apiIndex = 0;
 
 app.use(async (ctx, next) => {
   // 加上去了 解决 cors 跨域问题
@@ -31,6 +33,9 @@ app.use(logger());
 app.use(async (ctx, next) => {
   try {
     await next();
+
+    // 打印返回信息日志
+    utils.consoleSuccess(++apiIndex + ':----' + JSON.stringify(ctx.body));
   } catch (err) {
     ctx.response.status = err.statusCode || err.status || 500;
     // console.log("全局捕获错误处理", err);
@@ -49,6 +54,8 @@ app.use(
   })
 );
 app.use(router.routes()).use(router.allowedMethods());
+app.use(mockRouter.routes()).use(mockRouter.allowedMethods());
+
 app.use(koaStatic(path.join(__dirname, "./public")));
 
 app.listen(config.port, () => {
