@@ -6,6 +6,7 @@ const SUCCESS_MSG = "成功";
 const FAIL_MSG = "失败";
 const PARAMS_ERROR = "传递参数异常";
 
+// 返回全局的公共测试内容
 module.exports = {
   ERROR_MSG,
   SUCCESS_MSG,
